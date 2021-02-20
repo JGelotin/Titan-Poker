@@ -10,7 +10,7 @@ Joel Allan Gelotin
 
 2/20/21 Tasks:
 
-Robert -> Table
+Robert -> Table Interface
 
 Timothy -> Rules Menu
 
