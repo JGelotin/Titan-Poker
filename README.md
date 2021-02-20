@@ -9,8 +9,11 @@ Timothy Thamrun
 Joel Allan Gelotin  
 
 2/20/21 Tasks:
-Robert - Table
-Timothy - Rules Menu
-Joel - Start Menu
+
+Robert -> Table
+
+Timothy -> Rules Menu
+
+Joel -> Start Menu
 
 
