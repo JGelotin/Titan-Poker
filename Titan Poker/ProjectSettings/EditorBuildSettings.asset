@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 3966a7bcf3d74084e81b1a66b58c5eea
+  - enabled: 1
+    path: Assets/Scenes/TournamentTable.unity
+    guid: 188aa0313fd6eab4b9bfb35c6a26f45e
   m_configObjects: {}
