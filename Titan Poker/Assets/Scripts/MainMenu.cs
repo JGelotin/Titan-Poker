@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void CreateTable()
     {
-        SceneManager.LoadScene("SampleScene2");
+        SceneManager.LoadScene("TournamentTable");
     }
     public void QuitGame()
     {
