@@ -9,6 +9,14 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("TournamentTable");
     }
+    public void HowToPlay()
+    {
+        SceneManager.LoadScene("HowToPlayMenu");
+    }
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
     public void QuitGame()
     {
         Application.Quit();
