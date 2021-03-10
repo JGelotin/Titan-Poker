@@ -13,6 +13,10 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("HowToPlayMenu");
     }
+    public void HandRankings()
+    {
+        SceneManager.LoadScene("HandRankings_1");
+    }
     public void BackToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");

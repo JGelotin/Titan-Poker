@@ -12,6 +12,21 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu/HowToPlayMenu.unity
     guid: 59b82cbf65fd07f46af8d40341d8f7d3
   - enabled: 1
+    path: Assets/Scenes/MainMenu/HandRankings/HandRankings_1.unity
+    guid: e308dec5d8c3f7f49b778269e3d62afa
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/HandRankings/HandRankings_2.unity
+    guid: 952b29d735984c7469bb066e7a77f739
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/HandRankings/HandRankings_3.unity
+    guid: dffa3bfc1b01de24ab99e66356ed42e4
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/HandRankings/HandRankings_4.unity
+    guid: 8109dfc00ceaf624386cd531b126740e
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/HandRankings/HandRankings_5.unity
+    guid: 7bd60b64cb450ac488b91b0db7667961
+  - enabled: 1
     path: Assets/Scenes/TournamentTable.unity
     guid: 188aa0313fd6eab4b9bfb35c6a26f45e
   m_configObjects: {}
