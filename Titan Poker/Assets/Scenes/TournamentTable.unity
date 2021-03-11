@@ -801,6 +801,7 @@ GameObject:
   m_Component:
   - component: {fileID: 768416228}
   - component: {fileID: 768416227}
+  - component: {fileID: 768416229}
   m_Layer: 0
   m_Name: PlayerCard1
   m_TagString: Untagged
@@ -872,6 +873,21 @@ Transform:
   m_Father: {fileID: 1944061691}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &768416229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768416226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f2b242b94bc3d42a409403b1254e41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 11400000, guid: 8a3676fb7f7552f46af2a8da41a5dd9a, type: 2}
+  spriteRenderer: {fileID: 768416227}
+  cardArt: {fileID: 21300000, guid: 4987845773e4ac243a1354f6e5f1003f, type: 3}
 --- !u!1 &860233511
 GameObject:
   m_ObjectHideFlags: 0
