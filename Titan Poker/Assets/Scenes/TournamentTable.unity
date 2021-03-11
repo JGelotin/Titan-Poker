@@ -202,7 +202,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 160499735}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1944061692}
+        m_MethodName: CreateDeck
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &160499735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,7 +812,6 @@ GameObject:
   m_Component:
   - component: {fileID: 768416228}
   - component: {fileID: 768416227}
-  - component: {fileID: 768416229}
   m_Layer: 0
   m_Name: PlayerCard1
   m_TagString: Untagged
@@ -873,21 +883,6 @@ Transform:
   m_Father: {fileID: 1944061691}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &768416229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768416226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47f2b242b94bc3d42a409403b1254e41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 8a3676fb7f7552f46af2a8da41a5dd9a, type: 2}
-  spriteRenderer: {fileID: 768416227}
-  cardArt: {fileID: 21300000, guid: 4987845773e4ac243a1354f6e5f1003f, type: 3}
 --- !u!1 &860233511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,6 +1543,7 @@ GameObject:
   - component: {fileID: 1944061690}
   - component: {fileID: 1944061689}
   - component: {fileID: 1944061688}
+  - component: {fileID: 1944061692}
   m_Layer: 5
   m_Name: Main Canvas
   m_TagString: Untagged
@@ -1651,6 +1647,70 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1944061692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944061687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee9665945a99e04892f0f800cbedd80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCard1: {fileID: 768416227}
+  playerCard2: {fileID: 1463019425}
+  opponentCard1: {fileID: 1034177649}
+  opponentCard2: {fileID: 199558158}
+  communityCard1: {fileID: 860233512}
+  communityCard2: {fileID: 2138559887}
+  communityCard3: {fileID: 1871076888}
+  communityCard4: {fileID: 1873004430}
+  communityCard5: {fileID: 1363670955}
+--- !u!1 &1945610343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1945610344}
+  - component: {fileID: 1945610345}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1945610344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945610343}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5901466, y: -1.8208418, z: -72.35775}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1945610345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945610343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 767bcd88108cade449d6c493821c1e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1950161999
 GameObject:
   m_ObjectHideFlags: 0
