@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     {
         MakeSingleton();
         deck = new Deck();
-        round = 1;
+        round = 0;
     }
     private void MakeSingleton()
     {

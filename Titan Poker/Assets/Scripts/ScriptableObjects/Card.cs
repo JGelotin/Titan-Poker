@@ -12,7 +12,7 @@ public enum CardType
     TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE
 }
 
-public class Card : MonoBehaviour
+public class Card
 {
     CardSuit suit;
     CardType type;
