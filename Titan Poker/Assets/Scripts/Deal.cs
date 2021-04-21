@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Deal : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class Deal : MonoBehaviour
     public SpriteRenderer communityCard3;
     public SpriteRenderer communityCard4;
     public SpriteRenderer communityCard5;
+    public TMP_Text handRankPlayer;
+    public TMP_Text botRankPlayer;
 
     private void Awake()
     {
@@ -67,6 +71,22 @@ public class Deal : MonoBehaviour
     }
     private void DealRiver()
     {
+        List<Card> player = new List<Card>();
+        List<Card> bot = new List<Card>();
+        List<Card> community = new List<Card>();
+        player.Add(GameManager.deck.deck[0]);
+        player.Add(GameManager.deck.deck[2]);
+        bot.Add(GameManager.deck.deck[1]);
+        bot.Add(GameManager.deck.deck[3]);
+        community.Add(GameManager.deck.deck[4]);
+        community.Add(GameManager.deck.deck[5]);
+        community.Add(GameManager.deck.deck[6]);
+        community.Add(GameManager.deck.deck[7]);
+        community.Add(GameManager.deck.deck[8]);
+        Hand playerHand = HandStrength.DetermineHandStrength(community, player);
+        Hand botHand = HandStrength.DetermineHandStrength(community, bot);
+        handRankPlayer.text = playerHand.Rank.Name;
+        botRankPlayer.text = botHand.Rank.Name;
         communityCard5.sprite = GameManager.deck.deck[8].Sprite;
 		communityCard5.enabled = true;
     }

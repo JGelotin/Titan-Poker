@@ -21,7 +21,6 @@ public class Deck
             foreach (CardType t in Enum.GetValues(typeof(CardType)))
             {
                 deck.Add(new Card(s, t));
-                Debug.Log("Added new card");
                 i++;
             }
         }
