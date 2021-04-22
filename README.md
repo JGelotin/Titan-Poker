@@ -1,9 +1,9 @@
 2/20/21 Tasks: 🛠
 
-Robert -> Table Interface
+Robert -> Hand Comparing Algorithm, Player actions
 
-Timothy -> Rules Menu
+Timothy -> Necessary Base Classes, UI handling
 
-Joel -> Start Menu
+Joel -> Game Managers (Game, Round, Participant)
 
-
+All -> Hand Strength Algorithm
