@@ -14,7 +14,6 @@ public static class HandStrength
         availableCards = SortCards(availableCards);
         List<Card> highCard = new List<Card>();
         highCard.Add(availableCards[availableCards.Count - 1]);
-
         Hand hand = new Hand(new HandRank(Rank.HIGHCARD), availableCards, highCard);
 
         hand = CheckForSameCardRank(hand);
@@ -75,9 +74,7 @@ public static class HandStrength
         /**********************************************/
 
         if (allMatchingHands.Count == 0)
-        {
             return hand;
-        }
 
         /**********************************************/
         /*          1 FOUND MATCHING HANDS            */
@@ -166,9 +163,7 @@ public static class HandStrength
             /*************************************/
 
             else
-            {
                 return new Hand(new HandRank(Rank.FOUROFAKIND), allCardsInPlay, firstHand.Cards);
-            }
         }
 
         /**********************************************/
@@ -324,19 +319,19 @@ public static class HandStrength
             Hand temp = hand;
             temp.AddFlush(flush);
 
-            numOfHearts = 0;
-            numOfDiamonds = 0;
-            numOfClubs = 0;
-            numOfSpades = 0;
+            // numOfHearts = 0;
+            // numOfDiamonds = 0;
+            // numOfClubs = 0;
+            // numOfSpades = 0;
 
             return temp;
         }
         else
         {
-            numOfHearts = 0;
-            numOfDiamonds = 0;
-            numOfClubs = 0;
-            numOfSpades = 0;
+            // numOfHearts = 0;
+            // numOfDiamonds = 0;
+            // numOfClubs = 0;
+            // numOfSpades = 0;
 
             return hand;
         }

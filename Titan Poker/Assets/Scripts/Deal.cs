@@ -27,12 +27,14 @@ public class Deal : MonoBehaviour
     }
     public void CreateDeck()
     {
+        ShowHandStrength();
+        
         if (GameManager.round == 0)
         {
-            ResetCardSpites();
             GameManager.deck.RandomizeDeck();
             GameManager.round++;
             DisableAllCommunityCards();
+            RevealParticipantsCards();
         }
         else if (GameManager.round == 1)
         {
@@ -51,7 +53,10 @@ public class Deal : MonoBehaviour
         }
         else if (GameManager.round == 4)
         {
-            RevealParticipantsCards();
+            ResetCardSpites();
+            DisableAllCommunityCards();
+            handRankPlayer.text = "";
+            botRankPlayer.text = "";
             GameManager.round = 0;
         }
     }
@@ -71,22 +76,6 @@ public class Deal : MonoBehaviour
     }
     private void DealRiver()
     {
-        List<Card> player = new List<Card>();
-        List<Card> bot = new List<Card>();
-        List<Card> community = new List<Card>();
-        player.Add(GameManager.deck.deck[0]);
-        player.Add(GameManager.deck.deck[2]);
-        bot.Add(GameManager.deck.deck[1]);
-        bot.Add(GameManager.deck.deck[3]);
-        community.Add(GameManager.deck.deck[4]);
-        community.Add(GameManager.deck.deck[5]);
-        community.Add(GameManager.deck.deck[6]);
-        community.Add(GameManager.deck.deck[7]);
-        community.Add(GameManager.deck.deck[8]);
-        Hand playerHand = HandStrength.DetermineHandStrength(community, player);
-        Hand botHand = HandStrength.DetermineHandStrength(community, bot);
-        handRankPlayer.text = playerHand.Rank.Name;
-        botRankPlayer.text = botHand.Rank.Name;
         communityCard5.sprite = GameManager.deck.deck[8].Sprite;
 		communityCard5.enabled = true;
     }
@@ -116,5 +105,46 @@ public class Deal : MonoBehaviour
         communityCard3.sprite = unflippedCard;
         communityCard4.sprite = unflippedCard;
         communityCard5.sprite = unflippedCard;
+    }
+    private void ShowHandStrength()
+    {
+        List<Card> player = new List<Card>();
+        List<Card> bot = new List<Card>();
+        List<Card> community = new List<Card>();
+        player.Add(GameManager.deck.deck[0]);
+        player.Add(GameManager.deck.deck[2]);
+        bot.Add(GameManager.deck.deck[1]);
+        bot.Add(GameManager.deck.deck[3]);
+
+        if(GameManager.round == 0)
+        {
+
+        }
+        else if(GameManager.round == 1)
+        {
+            community.Add(GameManager.deck.deck[4]);
+            community.Add(GameManager.deck.deck[5]);
+            community.Add(GameManager.deck.deck[6]);
+        }
+        else if(GameManager.round == 2)
+        {
+            community.Add(GameManager.deck.deck[4]);
+            community.Add(GameManager.deck.deck[5]);
+            community.Add(GameManager.deck.deck[6]);
+            community.Add(GameManager.deck.deck[7]);
+        }
+        else
+        {
+            community.Add(GameManager.deck.deck[4]);
+            community.Add(GameManager.deck.deck[5]);
+            community.Add(GameManager.deck.deck[6]);
+            community.Add(GameManager.deck.deck[7]);
+            community.Add(GameManager.deck.deck[8]);
+        }
+
+        Hand playerHand = HandStrength.DetermineHandStrength(community, player);
+        Hand botHand = HandStrength.DetermineHandStrength(community, bot);
+        handRankPlayer.text = playerHand.Rank.Name;
+        botRankPlayer.text = botHand.Rank.Name;
     }
 }
