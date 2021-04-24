@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +7,7 @@ using TMPro;
 public class Deal : MonoBehaviour
 {
     // Temporary Code:
-    // All to test sprite replacement and deck shuffling which will be done away from deal class
+    // All to test sprite replacement and Deck shuffling which will be done away from deal class
     private static Sprite unflippedCard;
     public SpriteRenderer playerCard1;
     public SpriteRenderer playerCard2;
@@ -18,6 +18,7 @@ public class Deal : MonoBehaviour
     public SpriteRenderer communityCard3;
     public SpriteRenderer communityCard4;
     public SpriteRenderer communityCard5;
+
     public TMP_Text handRankPlayer;
     public TMP_Text botRankPlayer;
 
@@ -28,63 +29,62 @@ public class Deal : MonoBehaviour
     public void CreateDeck()
     {
         ShowHandStrength();
-        
-        if (GameManager.round == 0)
+        if (RoundManager.Round == Round.PREFLOP)
         {
-            GameManager.deck.RandomizeDeck();
-            GameManager.round++;
+            GameManager.Deck.RandomizeDeck();
+            //RoundManager.IncreaseRound();
             DisableAllCommunityCards();
             RevealParticipantsCards();
         }
-        else if (GameManager.round == 1)
+        else if (RoundManager.Round == Round.FLOP)
         {
             DealFlop();
-            GameManager.round++;
+            //RoundManager.IncreaseRound();
         }
-        else if (GameManager.round == 2)
+        else if (RoundManager.Round == Round.TURN)
         {
             DealTurn();
-            GameManager.round++;
+            //RoundManager.IncreaseRound();
         }
-        else if (GameManager.round == 3)
+        else if (RoundManager.Round == Round.RIVER)
         {
             DealRiver();
-            GameManager.round++;
+            //RoundManager.IncreaseRound();
         }
-        else if (GameManager.round == 4)
+        else if (RoundManager.Round == Round.SHOWDOWN)
         {
             ResetCardSpites();
             DisableAllCommunityCards();
             handRankPlayer.text = "";
             botRankPlayer.text = "";
-            GameManager.round = 0;
+            //RoundManager.IncreaseRound();
         }
     }
     private void DealFlop()
     {
-        communityCard1.sprite = GameManager.deck.deck[4].Sprite;
-        communityCard2.sprite = GameManager.deck.deck[5].Sprite;
-        communityCard3.sprite = GameManager.deck.deck[6].Sprite;
+        communityCard1.sprite = GameManager.Deck.Cards[4].Sprite;
+        communityCard2.sprite = GameManager.Deck.Cards[5].Sprite;
+        communityCard3.sprite = GameManager.Deck.Cards[6].Sprite;
 		communityCard1.enabled = true;
         communityCard2.enabled = true;
         communityCard3.enabled = true;
     }
     private void DealTurn()
     {
-        communityCard4.sprite = GameManager.deck.deck[7].Sprite;
+        communityCard4.sprite = GameManager.Deck.Cards[7].Sprite;
 		communityCard4.enabled = true;
     }
     private void DealRiver()
     {
-        communityCard5.sprite = GameManager.deck.deck[8].Sprite;
+        communityCard5.sprite = GameManager.Deck.Cards[8].Sprite;
 		communityCard5.enabled = true;
     }
     private void RevealParticipantsCards()
     {
-        playerCard1.sprite = GameManager.deck.deck[0].Sprite;
-        playerCard2.sprite = GameManager.deck.deck[2].Sprite;
-        opponentCard1.sprite = GameManager.deck.deck[1].Sprite;
-        opponentCard2.sprite = GameManager.deck.deck[3].Sprite;
+        playerCard1.sprite = GameManager.Deck.Cards[0].Sprite;
+        playerCard2.sprite = GameManager.Deck.Cards[2].Sprite;
+        opponentCard1.sprite = GameManager.Deck.Cards[1].Sprite;
+        opponentCard2.sprite = GameManager.Deck.Cards[3].Sprite;
     }
     private void DisableAllCommunityCards()
     {
@@ -111,35 +111,35 @@ public class Deal : MonoBehaviour
         List<Card> player = new List<Card>();
         List<Card> bot = new List<Card>();
         List<Card> community = new List<Card>();
-        player.Add(GameManager.deck.deck[0]);
-        player.Add(GameManager.deck.deck[2]);
-        bot.Add(GameManager.deck.deck[1]);
-        bot.Add(GameManager.deck.deck[3]);
+        player.Add(GameManager.Deck.Cards[0]);
+        player.Add(GameManager.Deck.Cards[2]);
+        bot.Add(GameManager.Deck.Cards[1]);
+        bot.Add(GameManager.Deck.Cards[3]);
 
-        if(GameManager.round == 0)
+        if(RoundManager.Round == Round.PREFLOP)
         {
 
         }
-        else if(GameManager.round == 1)
+        else if(RoundManager.Round == Round.FLOP)
         {
-            community.Add(GameManager.deck.deck[4]);
-            community.Add(GameManager.deck.deck[5]);
-            community.Add(GameManager.deck.deck[6]);
+            community.Add(GameManager.Deck.Cards[4]);
+            community.Add(GameManager.Deck.Cards[5]);
+            community.Add(GameManager.Deck.Cards[6]);
         }
-        else if(GameManager.round == 2)
+        else if(RoundManager.Round == Round.TURN)
         {
-            community.Add(GameManager.deck.deck[4]);
-            community.Add(GameManager.deck.deck[5]);
-            community.Add(GameManager.deck.deck[6]);
-            community.Add(GameManager.deck.deck[7]);
+            community.Add(GameManager.Deck.Cards[4]);
+            community.Add(GameManager.Deck.Cards[5]);
+            community.Add(GameManager.Deck.Cards[6]);
+            community.Add(GameManager.Deck.Cards[7]);
         }
         else
         {
-            community.Add(GameManager.deck.deck[4]);
-            community.Add(GameManager.deck.deck[5]);
-            community.Add(GameManager.deck.deck[6]);
-            community.Add(GameManager.deck.deck[7]);
-            community.Add(GameManager.deck.deck[8]);
+            community.Add(GameManager.Deck.Cards[4]);
+            community.Add(GameManager.Deck.Cards[5]);
+            community.Add(GameManager.Deck.Cards[6]);
+            community.Add(GameManager.Deck.Cards[7]);
+            community.Add(GameManager.Deck.Cards[8]);
         }
 
         Hand playerHand = HandStrength.DetermineHandStrength(community, player);

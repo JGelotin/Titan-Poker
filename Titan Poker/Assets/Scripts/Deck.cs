@@ -7,13 +7,15 @@ public class Deck
 {
     const int NUMBER_OF_CARDS = 52;
     public List<Card> deck;
+
+    public List<Card> Cards { get { return deck; } }
     
     public Deck()
     {
         deck = new List<Card>();
         InitializeDeck();
     }
-    public void InitializeDeck()
+    private void InitializeDeck()
     {
         int i = 0;
         foreach(CardSuit s in Enum.GetValues(typeof(CardSuit)))
