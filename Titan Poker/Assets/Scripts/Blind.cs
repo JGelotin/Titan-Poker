@@ -15,10 +15,12 @@ public class Blind
 
     public Blind()
     {
-
+        smallBlindAmount = MIN_BLIND_AMOUNT;
+        bigBlindAmount = MAX_BLIND_AMOUNT;
     }
-    public void IncreaseBlind()
+    public void IncreaseBlind(int multiplier)
     {
-
+        smallBlindAmount *= multiplier;
+        bigBlindAmount *= multiplier;
     }
 }

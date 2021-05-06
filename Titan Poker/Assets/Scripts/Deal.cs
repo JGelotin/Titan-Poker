@@ -29,35 +29,35 @@ public class Deal : MonoBehaviour
     public void CreateDeck()
     {
         ShowHandStrength();
-        if (RoundManager.Round == Round.PREFLOP)
+        if (GameManager.Round == Round.PREFLOP)
         {
             GameManager.Deck.RandomizeDeck();
-            //RoundManager.IncreaseRound();
+            GameManager.IncreaseRound();
             DisableAllCommunityCards();
             RevealParticipantsCards();
         }
-        else if (RoundManager.Round == Round.FLOP)
+        else if (GameManager.Round == Round.FLOP)
         {
             DealFlop();
-            //RoundManager.IncreaseRound();
+            GameManager.IncreaseRound();
         }
-        else if (RoundManager.Round == Round.TURN)
+        else if (GameManager.Round == Round.TURN)
         {
             DealTurn();
-            //RoundManager.IncreaseRound();
+            GameManager.IncreaseRound();
         }
-        else if (RoundManager.Round == Round.RIVER)
+        else if (GameManager.Round == Round.RIVER)
         {
             DealRiver();
-            //RoundManager.IncreaseRound();
+            GameManager.IncreaseRound();
         }
-        else if (RoundManager.Round == Round.SHOWDOWN)
+        else if (GameManager.Round == Round.SHOWDOWN)
         {
             ResetCardSpites();
             DisableAllCommunityCards();
             handRankPlayer.text = "";
             botRankPlayer.text = "";
-            //RoundManager.IncreaseRound();
+            GameManager.IncreaseRound();
         }
     }
     private void DealFlop()
@@ -116,17 +116,17 @@ public class Deal : MonoBehaviour
         bot.Add(GameManager.Deck.Cards[1]);
         bot.Add(GameManager.Deck.Cards[3]);
 
-        if(RoundManager.Round == Round.PREFLOP)
+        if(GameManager.Round == Round.PREFLOP)
         {
 
         }
-        else if(RoundManager.Round == Round.FLOP)
+        else if(GameManager.Round == Round.FLOP)
         {
             community.Add(GameManager.Deck.Cards[4]);
             community.Add(GameManager.Deck.Cards[5]);
             community.Add(GameManager.Deck.Cards[6]);
         }
-        else if(RoundManager.Round == Round.TURN)
+        else if(GameManager.Round == Round.TURN)
         {
             community.Add(GameManager.Deck.Cards[4]);
             community.Add(GameManager.Deck.Cards[5]);

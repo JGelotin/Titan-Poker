@@ -6,6 +6,7 @@ public enum Action
 {
     NONE,
     CHECK,
+    PRERAISE,
     RAISE,
     CALL,
     FOLD
@@ -14,12 +15,14 @@ public enum Action
 public class Entity
 {
     private Action action;
+    private int betAmount;
     private int blindAmount;
     private int chipAmount;
     private List<Card> holeCards;
     private Hand hand;
 
     public Action Action { get { return action; } }
+    public int BetAmount { get { return betAmount; } }
     public int BlindAmount { get { return blindAmount; } }
     public int ChipAmount { get { return chipAmount; } }
     public List<Card> HoleCards { get { return holeCards; } }
@@ -28,24 +31,35 @@ public class Entity
     public Entity()
     {
         action = Action.NONE;
+        betAmount = 0;
         blindAmount = 0;
         chipAmount = 1000;
         holeCards = new List<Card>();
         hand = new Hand();
     }
-    public void SetNewHoleCards(Card first, Card second)
+    public void SetHoleCards(Card first, Card second)
     {
-        holeCards.Clear();
-        holeCards.Add(first);
-        holeCards.Add(second);
+        List<Card> temp = new List<Card>();
+        temp.Add(first);
+        temp.Add(second);
+        holeCards = new List<Card>(temp);
     }
-    public void AssignBlind(int blindAmount)
+    public void SetBlind(int blindAmount)
     {
         this.blindAmount = blindAmount;
     }
     public void SetAction(Action action)
     {
         this.action = action;
+    }
+    public void SetBetAmount(int betAmount)
+    {
+        this.betAmount = betAmount;
+        
+        if(betAmount < chipAmount)
+            SubtractChipAmount(betAmount);
+        else
+            SubtractChipAmount(chipAmount);
     }
     public void SubtractChipAmount(int chipAmount)
     {
@@ -55,7 +69,7 @@ public class Entity
     {
         this.chipAmount += chipAmount;
     }
-    public void UpdateHand(List<Card> communityCards, List<Card> holeCards)
+    public void UpdateHand(List<Card> communityCards)
     {
         hand = HandStrength.DetermineHandStrength(communityCards, holeCards);
     }
