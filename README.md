@@ -4,13 +4,13 @@ Description: A Texas Hold 'Em game where a player can create a table and play Te
              Hold 'Em with a bot. This is a game that can be used to test your skills
              or just learning Texas Hold 'Em in general.
 
-Team Members:
+##**Team Members:**
 
  - Joel Allan Gelotin
  - Robert Susanto
  - Timothy Thamrun
 
-Roles:
+##**Roles:**
 
 Joel
  - Menu UI
@@ -28,3 +28,17 @@ Timothy:
  - Base Classes
  - Instructions UI & sprites
  - Helped with Hand Strength Algorithm
+
+##**HOW TO PLAY**
+
+Option 1:
+ - Open Github Repo (go to dev branch)
+ - Download Executable File
+ - Click on Titan Poker.exe
+ - Enjoy!
+
+Option 2:
+ - Download ZIP file (“Game Executable”)
+ - Extract
+ - Click on Titan Poker.exe
+ - Enjoy!
