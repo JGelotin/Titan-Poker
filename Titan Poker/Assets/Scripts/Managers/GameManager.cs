@@ -182,6 +182,18 @@ public class GameManager : MonoBehaviour
         round = Round.PREFLOP;
         deck.RandomizeDeck();
 
+        deck.deck[0] = new Card(CardSuit.HEART, CardType.SIX);
+        deck.deck[2] = new Card(CardSuit.SPADE, CardType.SIX);
+
+        deck.deck[1] = new Card(CardSuit.SPADE, CardType.KING);
+        deck.deck[3] = new Card(CardSuit.CLUB, CardType.KING);
+
+        deck.deck[4] = new Card(CardSuit.DIAMOND, CardType.SIX);
+        deck.deck[5] = new Card(CardSuit.CLUB, CardType.SIX);
+        deck.deck[6] = new Card(CardSuit.HEART, CardType.KING);
+        deck.deck[7] = new Card(CardSuit.CLUB, CardType.ACE);
+        deck.deck[8] = new Card(CardSuit.HEART, CardType.FIVE);
+
         UpdateBlinds();
         potAmount.text = "POT: " + pot.ToString();
 
@@ -286,6 +298,7 @@ public class GameManager : MonoBehaviour
                 UIShowPlayerCards();
                 UIShowAllEntitiesHandRank();
                 UIHideOpponentHandRank();
+                UIEnableAllCommunityCards();
                 pot = 0;
                 potAmount.text = "POT: " + pot.ToString();
                 gamesPassed++;
@@ -780,6 +793,11 @@ public class GameManager : MonoBehaviour
     }
     private void UIEnableAllCommunityCards()
     {
+        communityCard1.enabled = true;
+        communityCard2.enabled = true;
+        communityCard3.enabled = true;
+        communityCard4.enabled = true;
+        communityCard5.enabled = true;
         communityCard1.sprite = deck.Cards[4].Sprite;
         communityCard2.sprite = deck.Cards[5].Sprite;
         communityCard3.sprite = deck.Cards[6].Sprite;
@@ -1051,13 +1069,29 @@ public class GameManager : MonoBehaviour
             {
                 if(decision < 20)
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
                 else if(decision < 75)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else
                 {
@@ -1068,13 +1102,29 @@ public class GameManager : MonoBehaviour
             {
                 if(decision < 30)
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
                 else if(decision < 95)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else
                 {
@@ -1085,49 +1135,113 @@ public class GameManager : MonoBehaviour
             {
                 if(decision < 45)
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
                 else if(decision < 98)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(bot.ChipAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
                 }
             }
             else if(bot.Hand.Rank.Value <= 8)
             {
                 if(decision < 4)
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
                 else if(decision < 80)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(bot.ChipAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
                 }
             }
             else
             {
-                if(decision < 60)
+                if(decision < 50)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(bot.ChipAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
                 }
             }
         }
@@ -1137,13 +1251,29 @@ public class GameManager : MonoBehaviour
             {
                 if(decision < 5)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else if(decision < 20)
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
                 else
                 {
@@ -1154,13 +1284,29 @@ public class GameManager : MonoBehaviour
             {
                 if(decision < 15)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else if(decision < 60)
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
                 else
                 {
@@ -1171,13 +1317,29 @@ public class GameManager : MonoBehaviour
             {
                 if(decision < 40)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else if(decision < 85)
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
                 else
                 {
@@ -1188,31 +1350,71 @@ public class GameManager : MonoBehaviour
             {
                 if(decision < 60)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else if(decision < 90)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(bot.ChipAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
                 }
                 else
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
             }
             else
             {
                 if(decision < 20)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(bot.ChipAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
                 }
             }
         }
@@ -1222,8 +1424,16 @@ public class GameManager : MonoBehaviour
             {
                 if(decision < 10)
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
                 else
                 {
@@ -1234,8 +1444,16 @@ public class GameManager : MonoBehaviour
             {
                 if(decision < 40)
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
                 else
                 {
@@ -1246,13 +1464,29 @@ public class GameManager : MonoBehaviour
             {
                 if(decision < 20)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else if(decision < 90)
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
                 else
                 {
@@ -1263,31 +1497,71 @@ public class GameManager : MonoBehaviour
             {
                 if(decision < 40)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else if(decision < 97)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(bot.ChipAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
                 }
                 else
                 {
-                    bot.SetAction(Action.CALL);
-                    bot.SetBetAmount(player.BetAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(player.BetAmount);
+                    }
                 }
             }
             else
             {
                 if(decision < 30)
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(player.BetAmount + blind.BigAmount);
+                    }
                 }
                 else
                 {
-                    bot.SetAction(Action.RAISE);
-                    bot.SetBetAmount(bot.ChipAmount);
+                    if(player.BetAmount >= bot.ChipAmount)
+                    {
+                        bot.SetAction(Action.CALL);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
+                    else
+                    {
+                        bot.SetAction(Action.RAISE);
+                        bot.SetBetAmount(bot.ChipAmount);
+                    }
                 }
             }
         }
