@@ -7,7 +7,9 @@ Description: A Texas Hold 'Em game where a player can create a table and play Te
 Team Members:
 
 Joel Allan Gelotin
+
 Robert Susanto
+
 Timothy Thamrun
 
 Roles:
