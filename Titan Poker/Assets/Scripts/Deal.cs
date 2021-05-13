@@ -31,10 +31,12 @@ public class Deal : MonoBehaviour
         ShowHandStrength();
         if (GameManager.Round == Round.PREFLOP)
         {
+            handRankPlayer.enabled = false;
+            botRankPlayer.enabled = false;
             GameManager.Deck.RandomizeDeck();
             GameManager.IncreaseRound();
             DisableAllCommunityCards();
-            RevealParticipantsCards();
+            RevealPlayerCards();
         }
         else if (GameManager.Round == Round.FLOP)
         {
@@ -50,6 +52,9 @@ public class Deal : MonoBehaviour
         {
             DealRiver();
             GameManager.IncreaseRound();
+            handRankPlayer.enabled = true;
+            botRankPlayer.enabled = true;
+            RevealBotCards();
         }
         else if (GameManager.Round == Round.SHOWDOWN)
         {
@@ -65,20 +70,31 @@ public class Deal : MonoBehaviour
         communityCard1.sprite = GameManager.Deck.Cards[4].Sprite;
         communityCard2.sprite = GameManager.Deck.Cards[5].Sprite;
         communityCard3.sprite = GameManager.Deck.Cards[6].Sprite;
-		communityCard1.enabled = true;
+        communityCard1.enabled = true;
         communityCard2.enabled = true;
         communityCard3.enabled = true;
     }
     private void DealTurn()
     {
         communityCard4.sprite = GameManager.Deck.Cards[7].Sprite;
-		communityCard4.enabled = true;
+        communityCard4.enabled = true;
     }
     private void DealRiver()
     {
         communityCard5.sprite = GameManager.Deck.Cards[8].Sprite;
-		communityCard5.enabled = true;
+        communityCard5.enabled = true;
     }
+    private void RevealPlayerCards()
+    {
+        playerCard1.sprite = GameManager.Deck.Cards[0].Sprite;
+        playerCard2.sprite = GameManager.Deck.Cards[2].Sprite;
+    }
+    private void RevealBotCards()
+    {
+        opponentCard1.sprite = GameManager.Deck.Cards[1].Sprite;
+        opponentCard2.sprite = GameManager.Deck.Cards[3].Sprite;
+    }
+    /*
     private void RevealParticipantsCards()
     {
         playerCard1.sprite = GameManager.Deck.Cards[0].Sprite;
@@ -86,6 +102,7 @@ public class Deal : MonoBehaviour
         opponentCard1.sprite = GameManager.Deck.Cards[1].Sprite;
         opponentCard2.sprite = GameManager.Deck.Cards[3].Sprite;
     }
+    */
     private void DisableAllCommunityCards()
     {
         communityCard1.enabled = false;
@@ -116,17 +133,17 @@ public class Deal : MonoBehaviour
         bot.Add(GameManager.Deck.Cards[1]);
         bot.Add(GameManager.Deck.Cards[3]);
 
-        if(GameManager.Round == Round.PREFLOP)
+        if (GameManager.Round == Round.PREFLOP)
         {
 
         }
-        else if(GameManager.Round == Round.FLOP)
+        else if (GameManager.Round == Round.FLOP)
         {
             community.Add(GameManager.Deck.Cards[4]);
             community.Add(GameManager.Deck.Cards[5]);
             community.Add(GameManager.Deck.Cards[6]);
         }
-        else if(GameManager.Round == Round.TURN)
+        else if (GameManager.Round == Round.TURN)
         {
             community.Add(GameManager.Deck.Cards[4]);
             community.Add(GameManager.Deck.Cards[5]);
