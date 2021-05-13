@@ -59,7 +59,10 @@ public class Entity
         if(betAmount < chipAmount)
             SubtractChipAmount(betAmount);
         else
+        {
+            this.betAmount = chipAmount;
             SubtractChipAmount(chipAmount);
+        }
     }
     public void SubtractChipAmount(int chipAmount)
     {
