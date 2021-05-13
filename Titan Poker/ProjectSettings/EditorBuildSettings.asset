@@ -27,6 +27,39 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu/HandRankings/HandRankings_5.unity
     guid: 7bd60b64cb450ac488b91b0db7667961
   - enabled: 1
+    path: Assets/Scenes/MainMenu/Instructions/Overview Instructions.unity
+    guid: 008e05e9fd558fa4893f7cb8e5565815
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/Instructions/Game Begining Instructions.unity
+    guid: 4b25fc0b7ce841444ac5a394a23eaf9e
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/Instructions/Blinds Instructions.unity
+    guid: 960d9afacab38314f81195c40899788e
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/Instructions/Shuffle and Deal Instruction.unity
+    guid: ebb9da9f707875144a72466113ee2a94
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/Instructions/Pre Flop Instructions.unity
+    guid: 8f1f27a549c6f3a4097db76e8eea7713
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/Instructions/Moves Instructions.unity
+    guid: c753ce33d63434746afaaf4ba7e14ae4
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/Instructions/The Flop Instructions.unity
+    guid: 4b08f48776de4f249834c43af4ae821a
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/Instructions/The Turn Instructions.unity
+    guid: 2d3f0fe8fbb1c554a919d0ec080a228e
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/Instructions/The River Instructions.unity
+    guid: 488921ee2eff24a4cb2ce7c12207d8aa
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/Instructions/Showdown Instructions.unity
+    guid: 65204c7cdbd5d114bb73fb87f2270e1c
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/Instructions/WInning Hand Instructions.unity
+    guid: 4908f1a8454e727478c45a14df43a29f
+  - enabled: 1
     path: Assets/Scenes/TournamentTable.unity
     guid: 188aa0313fd6eab4b9bfb35c6a26f45e
   m_configObjects: {}
