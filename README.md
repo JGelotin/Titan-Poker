@@ -4,13 +4,13 @@ Description: A Texas Hold 'Em game where a player can create a table and play Te
              Hold 'Em with a bot. This is a game that can be used to test your skills
              or just learning Texas Hold 'Em in general.
 
-##**Team Members:**
+## **Team Members:**
 
  - Joel Allan Gelotin
  - Robert Susanto
  - Timothy Thamrun
 
-##**Roles:**
+## **Roles:**
 
 Joel
  - Menu UI
@@ -29,7 +29,7 @@ Timothy:
  - Instructions UI & sprites
  - Helped with Hand Strength Algorithm
 
-##**HOW TO PLAY**
+## **HOW TO PLAY**
 
 Option 1:
  - Open Github Repo (go to dev branch)
