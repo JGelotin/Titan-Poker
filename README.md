@@ -11,4 +11,3 @@ Robert Susanto
 
 Timothy Thamrun
 
-🔴Note: Weekly tasks will be listed and implemented on the dev branch.
