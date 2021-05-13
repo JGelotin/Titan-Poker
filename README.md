@@ -5,10 +5,10 @@ Description: A Texas Hold 'Em game where a player can join/create a table
 
 Team Members:
 
+Joel Allan Gelotin
+
 Robert Susanto
 
 Timothy Thamrun
-
-Joel Allan Gelotin
 
 🔴Note: Weekly tasks will be listed and implemented on the dev branch.
