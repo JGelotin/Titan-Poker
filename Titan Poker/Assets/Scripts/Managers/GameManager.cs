@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 // To turn into components
@@ -18,9 +19,14 @@ public enum Round
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    
+    public TMP_Text gameResultText;
+    public UnityEngine.UI.Button mainMenuButton;
 
     public TMP_Text playerResult;
     public TMP_Text botResult;
+    public TMP_Text playerDecision;
+    public TMP_Text botDecision;
     public TMP_Text playerHandRank;
     public TMP_Text playerChipAmount;
     public SpriteRenderer playerChip;
@@ -54,7 +60,8 @@ public class GameManager : MonoBehaviour
     private Blind blind;
     private int gamesPassed;
     private int pot;
-    private bool playerFirst;
+    private bool botDecisionMade;
+    private bool allIn;
 
     private Entity player;
     private Entity bot;
@@ -75,9 +82,9 @@ public class GameManager : MonoBehaviour
         gamesPassed = 0;
         player = new Entity();
         bot = new Entity();
-        playerFirst = true;
+        botDecisionMade = false;
 
-        StartNewRound();
+        StartCoroutine(GameStart());
     }
     private void MakeSingleton()
     {
@@ -93,61 +100,57 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        if(player.Action == Action.FOLD || bot.Action == Action.FOLD)
+        if((player.Action == Action.FOLD || bot.Action == Action.FOLD) && botDecisionMade)
         {
-            ResolveCurrentGame();
-            StartCoroutine(NewRoundWait());
+            botDecisionMade = false;
+            StartCoroutine(ResolveCurrentGame());
+            ResetEntityActions();
         }
-        else if(player.Action != Action.NONE && bot.Action != Action.NONE)
+        else if((player.Action != Action.NONE && bot.Action != Action.NONE) && botDecisionMade)
         {
-            if(player.Action == bot.Action ||
+            if((player.Action == bot.Action && player.Action != Action.RAISE && bot.Action != Action.RAISE) ||
               (player.Action == Action.RAISE && bot.Action == Action.CALL) ||
               (player.Action == Action.CALL && bot.Action == Action.RAISE))
               {
+                botDecisionMade = false;
+
+                if(allIn)
+                {
+                    UIEnableAllCommunityCards();
+                    botDecisionMade = true;
+                    round = Round.SHOWDOWN;
+                }
+
                 if(round == Round.PREFLOP)
                 {
                     IncreaseRound();
-                    potAmount.text = pot.ToString();
-                    UIDefaultPlayerInterfaceObjects();
+                    potAmount.text = "POT: " + pot.ToString();
                     ResetEntityActions();
-                    UIResetAllChipObjects();
-                    UIUpdateCommunityCards();
-                    UpdateAllEntitiesHandRank();
-                    UIUpdateEntitiesHandRank();
-                    UIDefaultPlayerInterfaceObjects();
+                    StartCoroutine(UpdateNextRoundUI());
                 }
                 else if(round == Round.FLOP)
                 {
                     IncreaseRound();
-                    potAmount.text = pot.ToString();
-                    UIDefaultPlayerInterfaceObjects();
+                    potAmount.text = "POT: " + pot.ToString();
                     ResetEntityActions();
-                    UIResetAllChipObjects();
-                    UIUpdateCommunityCards();
-                    UpdateAllEntitiesHandRank();
-                    UIUpdateEntitiesHandRank();
-                    UIDefaultPlayerInterfaceObjects();
+                    StartCoroutine(UpdateNextRoundUI());
                 }
                 else if(round == Round.TURN)
                 {
                     IncreaseRound();
-                    potAmount.text = pot.ToString();
-                    UIDefaultPlayerInterfaceObjects();
+                    potAmount.text = "POT: " + pot.ToString();
                     ResetEntityActions();
-                    UIResetAllChipObjects();
-                    UIUpdateCommunityCards();
-                    UpdateAllEntitiesHandRank();
-                    UIUpdateEntitiesHandRank();
-                    UIDefaultPlayerInterfaceObjects();
+                    StartCoroutine(UpdateNextRoundUI());
                 }
                 else if(round == Round.RIVER)
                 {
                     IncreaseRound();
+                    botDecisionMade = true;
                 }
                 else // SHOWDOWN
                 {
-                    ResolveCurrentGame();
-                    StartCoroutine(NewRoundWait());
+                    StartCoroutine(ResolveCurrentGame());
+                    ResetEntityActions();
                 }
               }
         }
@@ -155,13 +158,32 @@ public class GameManager : MonoBehaviour
     /**************************************/
     /*           MAIN FUNCTIONS           */
     /**************************************/
+    private IEnumerator GameStart()
+    {
+        UIHideAllEntitiesCards();
+        UIHideAllEntitiesHandRank();
+        UIDisableAllCommunityCards();
+        UIDisablePlayerChipsObjects();
+        UIDisableBotChipsObjects();
+        UIDisableEntityResultText();
+        UIDisablePlayerInterfaceObjects();
+        playerDecision.text = "";
+        botDecision.text = "";
+        mainMenuButton.gameObject.SetActive(false);
+
+        gameResultText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3);
+        gameResultText.gameObject.SetActive(false);
+
+        StartNewRound();
+    }
     private void StartNewRound()
     {
         round = Round.PREFLOP;
         deck.RandomizeDeck();
 
         UpdateBlinds();
-        potAmount.text = pot.ToString();
+        potAmount.text = "POT: " + pot.ToString();
 
         UpdateAllEntitiesCards();
         UIUpdateEntitiesChipAmount();
@@ -172,14 +194,18 @@ public class GameManager : MonoBehaviour
         UIDisableEntityResultText();
         UIDefaultPlayerInterfaceObjects();
         raiseAmountText.gameObject.SetActive(false);
-
-        //UIShowPlayerCards();
-        UIShowAllEntitesCards();
+        UIResetEntitiesDecision();
+        UIShowPlayerCards();
         UpdateAllEntitiesHandRank();
         UIUpdateEntitiesHandRank();
+        UIShowAllEntitiesHandRank();
+        UIEnablePlayerInterfaceObjects();
+        UIHideOpponentHandRank();
     }
-    private void ResolveCurrentGame()
+    private IEnumerator ResolveCurrentGame()
     {
+        int gameResult = HandCompare.Compare(player.Hand, bot.Hand);
+
         if(player.Action == Action.FOLD || bot.Action == Action.FOLD)
         {
             if(player.Action == Action.FOLD)
@@ -204,11 +230,13 @@ public class GameManager : MonoBehaviour
                 playerResult.text = "WIN";
                 botResult.text = "LOSS";
             }
+            UIShowAllEntitesCards();
+            UIShowAllEntitiesHandRank();
         }
         else
         {
-            int gameResult = HandCompare.Compare(player.Hand, bot.Hand);
-
+            UIShowAllEntitesCards();
+            UIShowAllEntitiesHandRank();
             if(gameResult == 0)
             {
                 UIEnableEntityResultText();
@@ -242,10 +270,41 @@ public class GameManager : MonoBehaviour
                 UIUpdateEntitiesChipAmount();
             }
         }
-        pot = 0;
-        potAmount.text = pot.ToString();
-        ResetEntityActions();
-        gamesPassed++;
+        
+        if((player.Action != Action.FOLD && bot.Action != Action.FOLD) && allIn == true)
+        {
+            if(gameResult == 0 || gameResult == 2)
+            {
+                yield return new WaitForSeconds(5);
+                GameEnd();
+            }
+            else
+            {
+                yield return new WaitForSeconds(5);
+                UIHideAllEntitiesCards();
+                UIHideAllEntitiesHandRank();
+                UIShowPlayerCards();
+                UIShowAllEntitiesHandRank();
+                UIHideOpponentHandRank();
+                pot = 0;
+                potAmount.text = "POT: " + pot.ToString();
+                gamesPassed++;
+                StartNewRound();
+            }
+        }
+        else
+        {
+            yield return new WaitForSeconds(5);
+            UIHideAllEntitiesCards();
+            UIHideAllEntitiesHandRank();
+            UIShowPlayerCards();
+            UIShowAllEntitiesHandRank();
+            UIHideOpponentHandRank();
+            pot = 0;
+            potAmount.text = "POT: " + pot.ToString();
+            gamesPassed++;
+            StartNewRound();
+        }
     }
     private void BotTurn()
     {
@@ -260,10 +319,47 @@ public class GameManager : MonoBehaviour
             UIUpdateBotChipObjects();
         }
     }
-    private IEnumerator NewRoundWait()
+    private IEnumerator UpdateNextRoundUI()
     {
-        yield return new WaitForSeconds(3);
-        StartNewRound();
+        yield return new WaitForSeconds(2);
+        UIDefaultPlayerInterfaceObjects();
+        UIResetAllChipObjects();
+        UIUpdateCommunityCards();
+        UpdateAllEntitiesHandRank();
+        UIUpdateEntitiesHandRank();
+        UIDefaultPlayerInterfaceObjects();
+        UIResetEntitiesDecision();
+    }
+    private void GameEnd()
+    {
+        UIHideAllEntitiesCards();
+        UIHideAllEntitiesHandRank();
+        UIDisableAllCommunityCards();
+        UIDisablePlayerChipsObjects();
+        UIDisableBotChipsObjects();
+        UIDisableEntityResultText();
+        UIDisablePlayerInterfaceObjects();
+        playerDecision.text = "";
+        botDecision.text = "";
+
+        if(player.ChipAmount == 0)
+        {
+            gameResultText.gameObject.SetActive(true);
+            gameResultText.text = "YOU LOST";
+        }
+        else
+        {
+            gameResultText.gameObject.SetActive(true);
+            gameResultText.text = "YOU WON!";
+        }
+
+        mainMenuButton.gameObject.SetActive(true);
+        gamesPassed = 0;
+        UpdateBlinds();
+        player = new Entity();
+        bot = new Entity();
+        botDecisionMade = false;
+        allIn = false;
     }
     /*************************************/
     /*         UPDATE FUNCTIONS          */
@@ -375,8 +471,8 @@ public class GameManager : MonoBehaviour
     public void CheckButtonClick()
     {
         player.SetAction(Action.CHECK);
-        
-        BotAction();
+        UIUpdateEntitiesDecision();
+        StartCoroutine(BotAction());
     }
     public void RaiseButtonClick()
     {
@@ -395,7 +491,15 @@ public class GameManager : MonoBehaviour
             Debug.Log("BET: " + Int32.Parse(raiseAmountText.text));
             player.SetBetAmount(Int32.Parse(raiseAmountText.text));
             pot += player.BetAmount;
+            potAmount.text = "POT: " + pot.ToString();
             UIUpdatePlayerChipObjects();
+            UIUpdateEntitiesChipAmount();
+
+            if(player.ChipAmount == 0)
+            {
+                allIn = true;
+                playerDecision.text = "ALL IN";
+            }
 
             checkButton.gameObject.SetActive(true);
             foldButton.gameObject.SetActive(true);
@@ -403,7 +507,8 @@ public class GameManager : MonoBehaviour
             raiseAmountText.gameObject.SetActive(false);
             raiseButton.transform.localPosition = new Vector3((float)-119.09, (float)-385.6, 0);
             
-            BotAction();
+            UIUpdateEntitiesDecision();
+            StartCoroutine(BotAction());
         }
     }
     public void CallButtonClick()
@@ -411,28 +516,71 @@ public class GameManager : MonoBehaviour
         player.SetAction(Action.CALL);
         player.SetBetAmount(bot.BetAmount);
         pot += player.BetAmount;
+        potAmount.text = "POT: " + pot.ToString();
         UIUpdatePlayerChipObjects();
         UIUpdateEntitiesChipAmount();
+        UIUpdateEntitiesDecision();
+        UIDisablePlayerInterfaceObjects();
+
+        if(player.ChipAmount == 0)
+        {
+            allIn = true;
+            playerDecision.text = "ALL IN";
+        }
+        if(bot.Action == Action.RAISE)
+        {
+            botDecisionMade = true;
+        }
     }
     public void FoldButtonClick()
     {
+        botDecisionMade = true;
         player.SetAction(Action.FOLD);
+        UIUpdateEntitiesDecision();
+        UIDisablePlayerInterfaceObjects();
     }
-    private void BotAction()
+    private IEnumerator BotAction()
     {
+        UIDisablePlayerInterfaceObjects();
+        yield return new WaitForSeconds(2);
         GenerateBotDecision();
 
+        if(bot.Action == Action.FOLD && allIn == true)
+        {
+            allIn = false;
+        }
         if(bot.Action == Action.RAISE || bot.Action == Action.CALL)
         {
             Debug.Log("BOT BET AMOUNT: " + bot.BetAmount);
             pot += bot.BetAmount;
+            potAmount.text = "POT: " + pot.ToString();
             UIEnableBotChipsObjects();
             UIUpdateBotChipObjects();
-        }
 
+            if(bot.ChipAmount == 0)
+            {
+                allIn = true;
+                botDecision.text = "ALL IN";
+            }
+        }
+        UIUpdateEntitiesDecision();
         UIUpdateEntitiesChipAmount();
-        UIEnablePlayerInterfaceObjects();
+
+        if(bot.Action == Action.RAISE)
+        {
+            yield return new WaitForSeconds(2);
+            UIEnablePlayerInterfaceObjects();
+        }
+        else
+        {
+            botDecisionMade = true;
+        }
         Debug.Log(bot.Action);
+    }
+    public void MainMenuButtonClick()
+    {
+        instance = null;
+        SceneManager.LoadScene("MainMenu");
     }
 
     /*************************************/
@@ -452,6 +600,35 @@ public class GameManager : MonoBehaviour
         
         // DEBUG PURPOSES
         botHandRank.text = bot.Hand.Rank.Name;
+    }
+    private void UIUpdateEntitiesDecision()
+    {
+        if(player.Action == Action.NONE)
+            playerDecision.text = "";
+        else if(player.Action == Action.CHECK)
+            playerDecision.text = "CHECK";
+        else if(player.Action == Action.RAISE)
+            playerDecision.text = "RAISE";
+        else if(player.Action == Action.CALL)
+            playerDecision.text = "CALL";
+        else
+            playerDecision.text = "FOLD";
+
+        if(bot.Action == Action.NONE)
+            botDecision.text = "";
+        else if(bot.Action == Action.CHECK)
+            botDecision.text = "CHECK";
+        else if(bot.Action == Action.RAISE)
+            botDecision.text = "RAISE";
+        else if(bot.Action == Action.CALL)
+            botDecision.text = "CALL";
+        else
+            botDecision.text = "FOLD";
+    }
+    private void UIResetEntitiesDecision()
+    {
+        playerDecision.text = "";
+        botDecision.text = "";
     }
     private void UIUpdateEntitiesChipAmount()
     {
@@ -572,6 +749,13 @@ public class GameManager : MonoBehaviour
         playerCard1.sprite = deck.Cards[0].Sprite;
         playerCard2.sprite = deck.Cards[2].Sprite;
     }
+    private void UIHideAllEntitiesCards()
+    {
+        playerCard1.sprite = unflippedCard;
+        playerCard2.sprite = unflippedCard;
+        opponentCard1.sprite = unflippedCard;
+        opponentCard2.sprite = unflippedCard;
+    }
     private void UIShowAllEntitesCards()
     {
         playerCard1.sprite = deck.Cards[0].Sprite;
@@ -584,9 +768,22 @@ public class GameManager : MonoBehaviour
         playerHandRank.gameObject.SetActive(true);
         botHandRank.gameObject.SetActive(true);
     }
+    private void UIHideAllEntitiesHandRank()
+    {
+        playerHandRank.gameObject.SetActive(false);
+        botHandRank.gameObject.SetActive(false);
+    }
     private void UIHideOpponentHandRank()
     {
         botHandRank.gameObject.SetActive(false);
+    }
+    private void UIEnableAllCommunityCards()
+    {
+        communityCard1.sprite = deck.Cards[4].Sprite;
+        communityCard2.sprite = deck.Cards[5].Sprite;
+        communityCard3.sprite = deck.Cards[6].Sprite;
+        communityCard4.sprite = deck.Cards[7].Sprite;
+        communityCard5.sprite = deck.Cards[8].Sprite;
     }
     private void UIDisableAllCommunityCards()
     {
@@ -595,18 +792,6 @@ public class GameManager : MonoBehaviour
         communityCard3.enabled = false;
         communityCard4.enabled = false;
         communityCard5.enabled = false;
-    }
-    private void UIResetCardSpites()
-    {
-        playerCard1.sprite = unflippedCard;
-        playerCard2.sprite = unflippedCard;
-        opponentCard1.sprite = unflippedCard;
-        opponentCard2.sprite = unflippedCard;
-        communityCard1.sprite = unflippedCard;
-        communityCard2.sprite = unflippedCard;
-        communityCard3.sprite = unflippedCard;
-        communityCard4.sprite = unflippedCard;
-        communityCard5.sprite = unflippedCard;
     }
 
     /************* PLAYER ACTION PRESETS **************/
