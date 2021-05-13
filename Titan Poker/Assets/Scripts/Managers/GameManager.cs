@@ -181,19 +181,7 @@ public class GameManager : MonoBehaviour
     {
         round = Round.PREFLOP;
         deck.RandomizeDeck();
-
-        deck.deck[0] = new Card(CardSuit.HEART, CardType.SIX);
-        deck.deck[2] = new Card(CardSuit.SPADE, CardType.SIX);
-
-        deck.deck[1] = new Card(CardSuit.SPADE, CardType.KING);
-        deck.deck[3] = new Card(CardSuit.CLUB, CardType.KING);
-
-        deck.deck[4] = new Card(CardSuit.DIAMOND, CardType.SIX);
-        deck.deck[5] = new Card(CardSuit.CLUB, CardType.SIX);
-        deck.deck[6] = new Card(CardSuit.HEART, CardType.KING);
-        deck.deck[7] = new Card(CardSuit.CLUB, CardType.ACE);
-        deck.deck[8] = new Card(CardSuit.HEART, CardType.FIVE);
-
+        
         UpdateBlinds();
         potAmount.text = "POT: " + pot.ToString();
 
