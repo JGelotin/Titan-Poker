@@ -1,9 +1,14 @@
-2/20/21 Tasks: 🛠
+Project: Titan Poker
 
-Robert -> Hand Comparing Algorithm, Player actions
+Description: A Texas Hold 'Em game where a player can join/create a table 
+             and compete in a tournament against other players or bots.
 
-Timothy -> Necessary Base Classes, UI handling
+Team Members:
 
-Joel -> Game Managers (Game, Round, Participant)
+Joel Allan Gelotin
 
-All -> Hand Strength Algorithm
+Robert Susanto
+
+Timothy Thamrun
+
+🔴Note: Weekly tasks will be listed and implemented on the dev branch.
