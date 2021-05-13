@@ -289,6 +289,7 @@ public class GameManager : MonoBehaviour
                 pot = 0;
                 potAmount.text = "POT: " + pot.ToString();
                 gamesPassed++;
+                allIn = false;
                 StartNewRound();
             }
         }
